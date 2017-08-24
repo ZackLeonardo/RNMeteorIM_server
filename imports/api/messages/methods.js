@@ -39,8 +39,15 @@ Meteor.methods({
     //
     return myCursor[0];
   },
-  'Messages.addOne': ({ message }) => {
-    return Messages.insert({ message });
+  'Messages.addOne': (message) => {
+    // return Messages.insert(message);
+    return Messages.update(
+      {id: message.id},
+      {
+        $set: { message }
+      },
+      { upsert: true }
+    )
   },
 });
 
